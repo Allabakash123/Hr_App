@@ -1,0 +1,263 @@
+import 'dart:convert';
+import 'dart:typed_data';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class Base64toFileWidget extends StatefulWidget {
+  final Uint8List? base64ImageBytes;
+  final VoidCallback? onReturn;
+
+  const Base64toFileWidget({
+    Key? key,
+    required this.base64ImageBytes,
+    this.onReturn,
+  }) : super(key: key);
+
+  @override
+  _Base64toFileWidgetState createState() => _Base64toFileWidgetState();
+}
+
+class _Base64toFileWidgetState extends State<Base64toFileWidget> {
+  final _formKey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
+  String _error = '';
+
+  Future<void> _signUp() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+        _error = '';
+      });
+
+      final username = _usernameController.text;
+      final password = _passwordController.text;
+      final imageBytes = widget.base64ImageBytes!;
+
+      // Convert image bytes to base64 string
+      String base64Image = base64Encode(imageBytes);
+
+      try {
+        // Make HTTP POST request to Django API for signup
+        final response = await http.post(
+          Uri.parse('http://127.0.0.1:8000/api/register'),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode(<String, String>{
+            'username': username,
+            'password': password,
+            'image_data': base64Image, // Change 'image_url' to 'image_data'
+          }),
+        );
+
+        // Check if the request was successful
+        if (response.statusCode == 200) {
+          // Registration successful
+          print('Sign-up successful');
+          // You can navigate to another screen or perform any other action here
+        } else {
+          // Registration failed
+          print('Sign-up failed: ${response.body}');
+          // Extract error message from response body
+          final responseData = jsonDecode(response.body);
+          final errorMessage =
+              responseData['error'] ?? 'Unknown error occurred';
+          setState(() {
+            _error = 'Sign-up failed: $errorMessage';
+          });
+        }
+      } catch (e) {
+        // Error occurred during HTTP request
+        print('Error during sign-up: $e');
+        setState(() {
+          _error = 'An error occurred. Please try again later.';
+        });
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _saveFaceImage() async {
+    if (widget.base64ImageBytes != null) {
+      setState(() {
+        _isLoading = true;
+        _error = '';
+      });
+
+      final username = _usernameController.text;
+      final password = _passwordController.text;
+      final imageBytes = widget.base64ImageBytes!;
+
+      // Convert image bytes to base64 string
+      String base64Image = base64Encode(imageBytes);
+
+      try {
+        // Make HTTP POST request to save face image
+        final response = await http.post(
+          Uri.parse('http://127.0.0.1:8000/api/register'),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode(<String, dynamic>{
+            'username': username,
+            'password': password,
+            'image_data': base64Image, // Change 'image' to 'image_data'
+          }),
+        );
+
+        // Check if the request was successful
+        if (response.statusCode == 200) {
+          // Face image saved successfully
+          print('Face image saved successfully');
+          // You can navigate to another screen or perform any other action here
+        } else {
+          // Saving face image failed
+          print('Saving face image failed: ${response.body}');
+          // Extract error message from response body
+          final responseData = jsonDecode(response.body);
+          final errorMessage =
+              responseData['error'] ?? 'Unknown error occurred';
+          setState(() {
+            _error = 'Saving face image failed: $errorMessage';
+          });
+        }
+      } catch (e) {
+        // Error occurred during HTTP request
+        print('Error during saving face image: $e');
+        setState(() {
+          _error = 'An error occurred while saving face image. Please try again later.';
+        });
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _error = 'No image to save';
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 500.0,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            offset: Offset(0, 2),
+            blurRadius: 5.0,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 300.0,
+            height: 200.0,
+            child: widget.base64ImageBytes != null
+                ? Image.memory(
+                    widget.base64ImageBytes!,
+                    fit: BoxFit.cover,
+                  )
+                : Placeholder(),
+          ),
+          SizedBox(height: 20.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        8.0, 0.0, 8.0, 0.0),
+                    child: SizedBox(
+                      width: 300.0,
+                      child: TextFormField(
+                        controller: _usernameController,
+                        decoration: InputDecoration(
+                          labelText: 'Username',
+                          // Other decoration properties...
+                        ),
+                        // Validator and other properties...
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        8.0, 12.0, 8.0, 0.0),
+                    child: SizedBox(
+                      width: 300.0,
+                      child: TextFormField(
+                        controller: _passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          // Other decoration properties...
+                        ),
+                        // Validator and other properties...
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 20.0),
+          _isLoading
+              ? CircularProgressIndicator()
+              : Text(
+                  _error,
+                  style: TextStyle(color: Colors.red),
+                ),
+          SizedBox(height: 20.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: _signUp,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                ),
+                child: Text('Sign Up'),
+              ),
+              ElevatedButton(
+                onPressed: _saveFaceImage,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                                  ),
+                child: Text('Save'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (widget.onReturn != null) {
+                    widget.onReturn!();
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                ),
+                child: Text('Return'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
