@@ -73,6 +73,7 @@ int dimen notification_small_icon_size_as_large 0x0
 int dimen notification_subtext_size 0x0
 int dimen notification_top_pad 0x0
 int dimen notification_top_pad_large_text 0x0
+int drawable corner 0x0
 int drawable ic_call_answer 0x0
 int drawable ic_call_answer_low 0x0
 int drawable ic_call_answer_video 0x0
@@ -92,6 +93,7 @@ int drawable notification_template_icon_bg 0x0
 int drawable notification_template_icon_low_bg 0x0
 int drawable notification_tile_bg 0x0
 int drawable notify_panel_notification_icon_bg 0x0
+int drawable toast_bg 0x0
 int id accessibility_action_clickable_span 0x0
 int id accessibility_custom_action_0 0x0
 int id accessibility_custom_action_1 0x0
@@ -195,6 +197,7 @@ int layout notification_template_custom_big 0x0
 int layout notification_template_icon_group 0x0
 int layout notification_template_part_chronometer 0x0
 int layout notification_template_part_time 0x0
+int layout toast_custom 0x0
 int string androidx_startup 0x0
 int string call_notification_answer_action 0x0
 int string call_notification_answer_video_action 0x0
