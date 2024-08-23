@@ -4,7 +4,7 @@
     "type": "PACKAGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "io.github.ponnamkarthik.toast.fluttertoast",
+  "applicationId": "dev.fluttercommunity.plus.share",
   "variantName": "debug",
   "elements": [
     {
