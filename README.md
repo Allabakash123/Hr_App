@@ -1,49 +1,34 @@
-# Sample Project
+# team-C
 
-Welcome to **Sample Project**! This is a brief overview and setup guide for getting started with this Django web application.
+A new Flutter project.
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Setup](#setup)
+## Getting Started
 
-## Introduction
+FlutterFlow projects are built to run on the Flutter _stable_ release.
+##
+-running for flutter application in mobile
+-follow this steps:
+-Step-1: Connect mobile with usb cable to the laptop
+-step-2:go to the project root directory path, this is my app path
+-ex: C:\Users\bf995\Desktop\29AprilHrAppCode\28march-hrapp\team_c (1)\team_c>
+-step-3: enter---> flutter run
+-ex: 
+-C:\Users\bf995\Desktop\29AprilHrAppCode\28march-hrapp\team_c (1)\team_c>flutter run
 
-Sample base project for creating applications.
+-once the build gradle is run successfully, u can see this below line with key commands
 
-## Setup
 
-### Installing Dependencies
+-C:\Users\bf995\Desktop\29AprilHrAppCode\28march-hrapp\team_c (1)\team_c>flutter run
+-Launching lib\main.dart on SM A226B in debug mode...
+-Running Gradle task 'assembleDebug'...                             29.2s
+-√  Built build\app\outputs\flutter-apk\app-debug.apk.
+-Syncing files to device SM A226B...                                137ms
 
-1. Ensure you have installed python 3.10+
-2. PostgreSQL
-3. PgAdmin or Dbeaver
-   
-### Installing Dependencies
-```bash
-pip install -r requirements.txt
-```
+Flutter run key commands.
+-r Hot reload. 
+-R Hot restart.
+-h List all available interactive commands.
+-d Detach (terminate "flutter run" but leave application running).
+-c Clear the screen
+-q Quit (terminate the application on the device)
 
-### Run below database .sql dump from pgAdmin or Dbeaver
-```bash
-dump-djangodb-202401290024.sql
-```
-
-### Edit env file and put the database configuration details.
-1. rename sample.env to .env in ay_connect folder 
-2. change environment variables to point it to database.
-
-### Run the Django project
-```bash
-python manage.py runserver
-```
-
-# Other
-### When creating new app you need to run these commands to do the necessary migrations
-### Running makemigrations
-```bash
-python manage.py makemigrations <appname>
-```
-### Running migrate
-```bash
-python manage.py migrate <appname>
-```
