@@ -4,7 +4,7 @@
     "type": "PACKAGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "com.fluttercandies.flutter_image_compress",
+  "applicationId": "com.tundralabs.fluttertts",
   "variantName": "debug",
   "elements": [
     {
