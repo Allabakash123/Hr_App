@@ -4,7 +4,7 @@
     "type": "PACKAGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "dev.fluttercommunity.plus.share",
+  "applicationId": "io.flutter.plugins.sharedpreferences",
   "variantName": "debug",
   "elements": [
     {
